@@ -35,7 +35,7 @@ handleRegister = async () => {
   const {redirect} = result.data
   if (redirect) {
 
-    this.props.history.push('/signin')
+    this.props.history.push('/login')
   } else {
     alert("User already exist")
   }
