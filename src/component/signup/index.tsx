@@ -10,47 +10,51 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import axios from 'axios';
+import { async } from 'q';
+
+const registerUrl = ('http://localhost:4000/register ')
 
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+export default class SignUp extends React.Component <any,any> {
 
-export default function SignUp() {
-  const classes = useStyles(useStyles);
+state = {
+  fullName: "",
+  age: 0,
+  email: "",
+  password: ""
+}
+
+handleOnChange = (event: any) =>{
+  const { target } = event;
+  this.setState({[target.name]: target.value})
+}
+
+handleRegister = async () => {
+  const result = await axios.post(registerUrl, this.state)
+  const {redirect} = result.data
+  if (redirect) {
+
+    this.props.history.push('/signin')
+  } else {
+    alert("User already exist")
+  }
+  console.log(this.state)
+}
+
+render() {
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <div>
+        <Avatar>
           <PersonAddIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -62,6 +66,7 @@ export default function SignUp() {
                 id="fullName"
                 label="Full Name"
                 autoFocus
+                onChange={this.handleOnChange}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -73,6 +78,7 @@ export default function SignUp() {
                 label="Age"
                 name="age"
                 autoComplete="age"
+                onChange={this.handleOnChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -84,6 +90,7 @@ export default function SignUp() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={this.handleOnChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -96,15 +103,16 @@ export default function SignUp() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={this.handleOnChange}
               />
             </Grid>
           </Grid>
           <Button
-            type="submit"
+            //type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            onClick={this.handleRegister}
           >
             Sign Up
           </Button>
@@ -121,4 +129,5 @@ export default function SignUp() {
       </Box>
     </Container>
   );
+}
 }

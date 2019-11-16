@@ -12,48 +12,47 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import FaceIcon from '@material-ui/icons/Face';
+import axios from 'axios';
 
 
+const logInUrl = ('http://localhost:4000/login')
 
-const useStyles = makeStyles(theme => ({
-  '@global': {
-    body: {
-      backgroundColor: theme.palette.common.white,
-    },
-  },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+export default class Login extends React.Component<any,any> {
 
-export default function SignIn() {
-  const classes = useStyles();
+  state = {
+    email: "",
+    password: ""
+  }
+
+  handleOnChange = (event: any) =>{
+    const { target } = event;
+    this.setState({[target.name]: target.value})
+  }
+  
+  handleLogin = async () => {
+    console.log(this.state)
+    const result = await axios.post(logInUrl, this.state)
+    const {redirect} = result.data
+    if (redirect) {
+      alert(result.data.message)
+      //this.props.history.push('/home')
+    } else {
+      alert(result.data.message)
+    }
+  }
+  render() {
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
+      <div>
+        <Avatar>
           <FaceIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Log in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form noValidate>
           <TextField
             variant="outlined"
             margin="normal"
@@ -64,6 +63,7 @@ export default function SignIn() {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={this.handleOnChange}
           />
           <TextField
             variant="outlined"
@@ -75,6 +75,7 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={this.handleOnChange}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -85,9 +86,9 @@ export default function SignIn() {
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            onClick={this.handleLogin}
           >
-            Sign In
+            Log In
           </Button>
           <Grid container>
             <Grid item xs>
@@ -107,4 +108,5 @@ export default function SignIn() {
       </Box>
     </Container>
   );
+}
 }

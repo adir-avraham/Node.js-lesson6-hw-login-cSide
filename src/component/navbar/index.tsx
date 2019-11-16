@@ -55,18 +55,20 @@ export default function Navbar() {
             <Link2 variant="button" color="textPrimary" href="#" className={classes.link}>
               Features
             </Link2>
+            <Link to="/home/">
             <Link2 variant="button" color="textPrimary" href="#" className={classes.link}>
-              Enterprise
+              Home
             </Link2>
+            </Link>
             <Link to="/signup/">
             <Link2 variant="button" color="textPrimary" href="#" className={classes.link}>
               Sign up
             </Link2>
             </Link>
           </nav>
-          <Link to="/signin/">
+          <Link to="/login/">
           <Button href="#" color="primary" variant="outlined" className={classes.link}>
-            Sign in
+            Log in
           </Button>
           </Link>
         </Toolbar>

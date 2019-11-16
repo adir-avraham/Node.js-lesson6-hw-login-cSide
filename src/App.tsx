@@ -2,7 +2,8 @@ import React from 'react';
 import Navbar from './component/navbar';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SignUp from './component/signup';
-import SignIn from './component/signin';
+import Login from './component/login';
+import HomePage from './component/home'
 
 const App: React.FC = () => {
   return (
@@ -14,7 +15,8 @@ const App: React.FC = () => {
 
         <Switch>
           <Route path="/signup" component={SignUp} />
-          <Route path="/Signin" component={SignIn} />      
+          <Route path="/login" component={Login} />      
+          <Route path="/home" component={HomePage} />      
           <Route path="**" component={SignUp} />
         </Switch>
 
