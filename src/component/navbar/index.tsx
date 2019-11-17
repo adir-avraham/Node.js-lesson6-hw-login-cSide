@@ -9,26 +9,24 @@ export default class Navbar extends React.Component<any, any> {
   render() {
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
         <ul className="navbar-nav">
           <li className="nav-item active">
             <Link to="/home/">
-              <a className="nav-link">Home <span className="sr-only">(current)</span></a>
+              <span className="nav-link">Home <span className="sr-only">(current)</span></span>
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/signup/">
-              <a className="nav-link">Register</a>
+              <span className="nav-link">Register</span>
             </Link>
           </li>
           <li className="nav-item">
             <Link to="/login/">
-              <a className="nav-link">Log in</a>
+              <span className="nav-link">Log in</span>
             </Link>
           </li>
         </ul>
-      </div>
     </nav>
   );
 }
