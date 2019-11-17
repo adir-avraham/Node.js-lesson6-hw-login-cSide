@@ -1,23 +1,13 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import FaceIcon from '@material-ui/icons/Face';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const logInUrl = ('http://localhost:4000/login')
 
-export default class Login extends React.Component<any,any> {
+
+
+export default class Login extends React.Component<any, any> {
 
   state = {
     email: "",
@@ -25,90 +15,63 @@ export default class Login extends React.Component<any,any> {
     message: " Enter your email and password",
   }
 
-  handleOnChange = (event: any) =>{
+  handleOnChange = (event: any) => {
     const { target } = event;
-    this.setState({[target.name]: target.value})
+    this.setState({ [target.name]: target.value })
   }
-  
+
   handleLogin = async () => {
     console.log(this.state)
     const result = await axios.post(logInUrl, this.state)
-    const {redirect, message, key} = result.data
-    this.setState({message: message})
+    const { redirect, message, key } = result.data
+    this.setState({ message: message })
     if (redirect) {
-    alert(message)
-    this.props.history.push('/home')
-    localStorage.setItem('key', key);
-    } 
+      alert(message)
+      this.props.history.push('/home')
+      localStorage.setItem('key', key);
+    }
     if (!redirect) this.props.history.push('/login')
-    
+
   }
   render() {
 
-  return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div>
-        <Avatar>
-          <FaceIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Log in {this.state.message}
-        </Typography>
-        <form noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            onChange={this.handleOnChange}
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            onChange={this.handleOnChange}
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            fullWidth
-            variant="contained"
-            color="primary"
-            onClick={this.handleLogin}
-          >
-            Log In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
-        </form>
+    return (
+      <div className="container">
+        <div className="row justify-content-md-center">
+          <div className="text-center col-lg-4">
+            <form className="form-signin">
+              <img className="mb-4" src="https://d1fklm6vjp0pky.cloudfront.net/wysiwyg/ves_gosmart/loginlogo-mobile.png" alt="" width="92" height="92" />
+              <h1 className="h3 mb-3 font-weight-normal">Please sign in</h1>
+              <label htmlFor="inputEmail" className="sr-only">Email address</label>
+              <input  
+              id="inputEmail" 
+              className="form-control" 
+              placeholder="Email address"
+              name="email" 
+              required
+              onChange={this.handleOnChange}
+              />
+              <label htmlFor="inputPassword" className="sr-only">Password</label>
+              <input type="password"
+              id="inputPassword"
+              className="form-control"
+              placeholder="Password"
+              name="password"
+              required
+              onChange={this.handleOnChange}
+              />
+              <div className="checkbox mb-3">
+                <span>{this.state.message}</span>
+              </div>
+              <button className="btn btn-lg btn-primary btn-block"
+              type="button"
+              onClick={this.handleLogin}
+              >Sign in</button>
+            </form>
+          </div>
+        </div>
       </div>
-      <Box mt={8}>
-      </Box>
-    </Container>
-  );
-}
+
+    );
+  }
 }
