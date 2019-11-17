@@ -21,7 +21,8 @@ export default class Login extends React.Component<any,any> {
 
   state = {
     email: "",
-    password: ""
+    password: "",
+    message: " Enter your email and password",
   }
 
   handleOnChange = (event: any) =>{
@@ -32,13 +33,15 @@ export default class Login extends React.Component<any,any> {
   handleLogin = async () => {
     console.log(this.state)
     const result = await axios.post(logInUrl, this.state)
-    const {redirect} = result.data
+    const {redirect, message, key} = result.data
+    this.setState({message: message})
     if (redirect) {
-      alert(result.data.message)
-      //this.props.history.push('/home')
-    } else {
-      alert(result.data.message)
-    }
+    alert(message)
+    this.props.history.push('/home')
+    localStorage.setItem('key', key);
+    } 
+    if (!redirect) this.props.history.push('/login')
+    
   }
   render() {
 
@@ -50,7 +53,7 @@ export default class Login extends React.Component<any,any> {
           <FaceIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Log in
+          Log in {this.state.message}
         </Typography>
         <form noValidate>
           <TextField
@@ -82,7 +85,6 @@ export default class Login extends React.Component<any,any> {
             label="Remember me"
           />
           <Button
-            type="submit"
             fullWidth
             variant="contained"
             color="primary"
