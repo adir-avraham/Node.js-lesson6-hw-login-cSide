@@ -23,12 +23,12 @@ export default class Login extends React.Component<any, any> {
   handleLogin = async () => {
     console.log(this.state)
     const result = await axios.post(logInUrl, this.state)
-    const { redirect, message, key } = result.data
+    const { redirect, message, token } = result.data
     this.setState({ message: message })
     if (redirect) {
       alert(message)
       this.props.history.push('/home')
-      localStorage.setItem('key', key);
+      localStorage.setItem('token', token);
     }
     if (!redirect) this.props.history.push('/login')
 

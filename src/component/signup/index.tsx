@@ -22,12 +22,12 @@ handleOnChange = (event: any) =>{
 
 handleRegister = async () => {
   const result = await axios.post(registerUrl, this.state)
-  const {redirect} = result.data
+  const {redirect, message} = result.data
   if (redirect) {
-
+    alert(message)
     this.props.history.push('/login')
   } else {
-    alert("User already exist")
+    this.setState( {message: message})
   }
   console.log(this.state)
 }
