@@ -1,38 +1,43 @@
-import React from 'react';
+import React, {useState} from 'react';
 import axios from 'axios';
+import useCustomForm from '../../hooks/useCustomForm'
 
 
-const registerUrl = ('http://localhost:4000/register ')
+
+const registerUrl = ('http://localhost:4000/register')
 
 
-export default class SignUp extends React.Component <any,any> {
+export default function SignUp(props) {
 
-state = {
+const initialState = {
   fullName: "",
-  age: 0,
+  age: "",
   email: "",
   password: "",
-  message: "hello"
 }
 
-handleOnChange = (event: any) =>{
-  const { target } = event;
-  this.setState({[target.name]: target.value})
-}
+const [data, handleChange] = useCustomForm(initialState);
+const [message, setMessage] = useState('Hello!'); 
 
-handleRegister = async () => {
-  const result = await axios.post(registerUrl, this.state)
+
+const handleRegister = async (data) => {
+  const result = await axios.post(registerUrl, data)
+  if (result.data.details) {
+    console.log(result)
+    props.history.push('/register');
+    const {message} = result.data.details[0];
+    setMessage(message) 
+  } else {
   const {redirect, message} = result.data
   if (redirect) {
-    alert(message)
-    this.props.history.push('/login')
+    props.history.push('/login')
   } else {
-    this.setState( {message: message})
+    console.log(result)
+    props.history.push('/register')
+    setMessage(message)
   }
-  console.log(this.state)
-}
+}}
 
-render() {
 
   return (
     <div className="container">
@@ -48,7 +53,7 @@ render() {
           placeholder="Full name"
           name="fullName" 
           required
-          onChange={this.handleOnChange}
+          onChange={handleChange}
           />
           <label htmlFor="inputAge" className="sr-only">Age</label>
           <input  
@@ -57,7 +62,7 @@ render() {
           placeholder="Age"
           name="age" 
           required
-          onChange={this.handleOnChange}
+          onChange={handleChange}
           />
           <label htmlFor="inputEmail" className="sr-only">Email address</label>
           <input  
@@ -66,7 +71,7 @@ render() {
           placeholder="Email address"
           name="email" 
           required
-          onChange={this.handleOnChange}
+          onChange={handleChange}
           />
           <label htmlFor="inputPassword" className="sr-only">Password</label>
           <input type="password"
@@ -75,19 +80,20 @@ render() {
           placeholder="Password"
           name="password"
           required
-          onChange={this.handleOnChange}
+          onChange={handleChange}
           />
           <div className="checkbox mb-3">
-            <span>{this.state.message}</span>
+          {message === "Hello!" ? <span>{message}</span> : <span className="text-danger">{message}</span>}
           </div>
           <button className="btn btn-lg btn-primary btn-block"
           type="button"
-          onClick={this.handleRegister}
-          >Sign in</button>
+          onClick={()=>{
+            handleRegister(data)
+          }}
+          >Sign up</button>
         </form>
       </div>
     </div>
   </div>
   );
-}
 }

@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-export default class HomePage extends React.Component<any, any> {
+export default class MyFlights extends React.Component<any, any> {
 
 
     render() {
@@ -10,10 +10,13 @@ export default class HomePage extends React.Component<any, any> {
             <div className="container">
                 <div className="row justify-content-md-center">
                     <div className="mt-5">
-                        <img height="300px" width="600px" src="https://mk0waynehomesxs0o97h.kinstacdn.com/wp-content/uploads/2018/12/BW-Covington-Craftsman.jpg" alt="not available" />
+                        <img height="400px" width="400px" src="https://travelupdate.boardingarea.com/wp-content/uploads/2017/01/MyFlights.jpg" alt="not available" />
                     </div>
                 </div>
             </div>
         )
     }
 }
+
+
+

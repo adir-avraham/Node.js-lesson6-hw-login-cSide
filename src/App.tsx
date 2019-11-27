@@ -3,7 +3,8 @@ import Navbar from './component/navbar';
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import SignUp from './component/signup';
 import Login from './component/login';
-import HomePage from './component/home'
+import HomePage from './component/home';
+import MyFlights from './component/myflights';
 
 const App: React.FC = () => {
   return (
@@ -16,7 +17,8 @@ const App: React.FC = () => {
         <Switch>
           <Route path="/signup" component={SignUp} />
           <Route path="/login" component={Login} />      
-          <Route path="/home" component={HomePage} />      
+          <Route path="/home" component={HomePage} />    
+          <Route path="/myflights" component={MyFlights} />    
           <Route path="**" component={SignUp} />
         </Switch>
 
